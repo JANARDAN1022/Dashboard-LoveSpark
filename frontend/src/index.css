@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.SCROLL::-webkit-scrollbar {
+    display: none;
+}
+
+/* For webkit-based browsers (Chrome, Safari) */
+.ScrollStyle::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+.ScrollStyle::-webkit-scrollbar-thumb {
+    background-color: #3b3b3b; /* Color of the scrollbar thumb (handle) */
+    border-radius: 4px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+.ScrollStyle::-webkit-scrollbar-thumb:hover {
+    background-color: #424242; /* Color of the scrollbar thumb when hovered */
+  }
+  
+  /* For Firefox */
+  .ScrollStyle{
+    scrollbar-width: thin; /* Width of the scrollbar */
+    scrollbar-color: #888 #333; /* Color of the scrollbar thumb and track */
+  }
+  
+  
+ 
+  
+  
+  
+  

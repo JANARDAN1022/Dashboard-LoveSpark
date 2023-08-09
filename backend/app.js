@@ -11,12 +11,21 @@ const app = express();
 
 
 app.use(bodyparser.urlencoded({extended:true}));
-app.use(cors({  
-    origin: 'http://localhost:3000',
-    methods:"GET, POST, PUT, DELETE",
-    credentials: true,
-    }
-     ));
+const allowedOrigins = [
+    'http://localhost:3000', // Add other origins as needed
+    'https://love-spark-frontend.vercel.app', // Remove the trailing slash from the URL
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+  }));
     
     app.use(express.json());
     app.use(cookieParser());
@@ -24,4 +33,9 @@ app.use('/api/Users/',UserRoutes);
 app.use('/api/Reports/',ReportRoutes);
 app.use('/api/Admin/',AdminRoutes);
 app.use(ErrorHandler);
+
+app.get('/',(req,res)=>{
+    res.json('Wroking, Hello From loveSpark');
+    });
+    
 module.exports = app;

@@ -9,11 +9,11 @@ const ErrorHandler = require('./Middlewares/ErrorHandler');
 const app = express();
 
 
-
-app.use(bodyparser.urlencoded({extended:true}));
+app.use(bodyparser.urlencoded({ extended: true }));
 const allowedOrigins = [
     'http://localhost:3000', // Add other origins as needed
-    'https://dashboard-love-spark-frontend.vercel.app' // Remove the trailing slash from the URL
+    'https://dashboard-love-spark-frontend.vercel.app',// Remove the trailing slash from the URL
+     'https://dashboard-love-spark-frontend.vercel.app/'
 ];
 
 app.use(cors({
@@ -30,9 +30,9 @@ app.use(cors({
     
     app.use(express.json());
     app.use(cookieParser());
-app.use('/api/Users/',cors({ origin: allowedOrigins, credentials: true }),UserRoutes);
-app.use('/api/Reports/',cors({ origin: allowedOrigins, credentials: true }),ReportRoutes);
-app.use('/api/Admin/',cors({ origin: allowedOrigins, credentials: true }),AdminRoutes);
+app.use('/api/Users/',UserRoutes);
+app.use('/api/Reports/',ReportRoutes);
+app.use('/api/Admin/',AdminRoutes);
 app.use(ErrorHandler);
 
 app.get('/',(req,res)=>{

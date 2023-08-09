@@ -13,8 +13,8 @@ const app = express();
 app.use(bodyparser.urlencoded({extended:true}));
 const allowedOrigins = [
     'http://localhost:3000', // Add other origins as needed
-    'https://dashboard-love-spark-frontend.vercel.app/', // Remove the trailing slash from the URL
-  ];
+    'https://dashboard-love-spark-frontend.vercel.app', // Remove the trailing slash from the URL  
+];
   
   app.use(cors({
     origin: function (origin, callback) {

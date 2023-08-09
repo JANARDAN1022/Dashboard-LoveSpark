@@ -8,7 +8,7 @@ router.route('/Register').post(RegisterAdmin);
 router.route('/Logout').get(logout);
 router.route('/AdminExists').get(AdminExists);
 router.route('/UpdateInfo').put(authenticate,UpdateAdminDetails);
-router.route('/Info').get(AdminDetails);
+router.route('/Info').get(authenticate,AdminDetails);
 
 
 module.exports = router;

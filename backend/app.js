@@ -12,11 +12,12 @@ const app = express();
 app.use(bodyparser.urlencoded({ extended: true }));
 
 
+// Configure CORS middleware
 app.use(cors({
-    origin:'https://dashboard-love-spark-frontend.vercel.app'||'http://localhost:3000',
+    origin: ['https://love-spark-frontend.vercel.app', 'http://localhost:3000'],
     credentials: true
 }));
-    
+
     app.use(express.json());
     app.use(cookieParser());
 app.use('/api/Users/',UserRoutes);

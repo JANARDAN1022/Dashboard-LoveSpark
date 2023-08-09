@@ -10,20 +10,10 @@ const app = express();
 
 
 app.use(bodyparser.urlencoded({ extended: true }));
-const allowedOrigins = [
-    'http://localhost:3000', // Add other origins as needed
-    'https://dashboard-love-spark-frontend.vercel.app',// Remove the trailing slash from the URL
-];
+
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods as needed 
+    origin:'https://dashboard-love-spark-frontend.vercel.app'||'http://localhost:3000',
     credentials: true
 }));
     

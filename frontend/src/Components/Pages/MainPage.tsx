@@ -31,7 +31,7 @@ const {loading,isAuthenticated,Admin} = useAppSelector((state)=>state.user);
 const Navigate = useNavigate();
 
 useEffect(()=>{
-  if((!loading && !isAuthenticated) || Admin===null){
+  if(!loading  && (!isAuthenticated || Admin===null)){
    Navigate('/Login');
   }
 },[Navigate,loading,isAuthenticated,Admin]);

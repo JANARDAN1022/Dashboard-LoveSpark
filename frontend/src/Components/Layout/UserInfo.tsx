@@ -73,8 +73,8 @@ const UserInfo = () => {
     
         // Make the API request with the constructed query
         const Route = query!==''
-          ? `http://localhost:5000/api/Users/All?${query}`
-          : `http://localhost:5000/api/Users/All`;
+          ? `https://dashboard-love-spark-backend.vercel.app/api/Users/All?${query}`
+          : `https://dashboard-love-spark-backend.vercel.app/api/Users/All`;
     
         const config = {
           headers: { 'Content-Type': 'application/json' },

@@ -24,7 +24,7 @@ const Linechart = () => {
 
   const fetchGenderData = useCallback(async () => {
     try {
-      const Route = `http://localhost:5000/api/Users/GenderDistribution`;
+      const Route = `https://dashboard-love-spark-backend.vercel.app/api/Users/GenderDistribution`;
       const config = {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,

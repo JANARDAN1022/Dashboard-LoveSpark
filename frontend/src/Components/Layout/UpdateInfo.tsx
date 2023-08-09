@@ -48,7 +48,7 @@ const UpdateInfo = () => {
 
   const AdminExists = useCallback(async()=>{
     try {
-     const Route = `http://localhost:5000/api/Admin/AdminExists`;
+     const Route = `https://dashboard-love-spark-backend.vercel.app/api/Admin/AdminExists`;
      const config = {
        headers: { 'Content-Type': 'application/json' },
        withCredentials: true,

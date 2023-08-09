@@ -18,7 +18,7 @@ import {
 
 
 const instance = axios.create({
-    baseURL:"http://localhost:5000/api/Admin/"   //Api Base Url
+    baseURL:"https://dashboard-love-spark-backend.vercel.app/api/Admin/"   //Api Base Url
 });
 
 

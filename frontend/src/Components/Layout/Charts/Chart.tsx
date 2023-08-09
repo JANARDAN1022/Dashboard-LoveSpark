@@ -12,7 +12,7 @@ const Chart = () => {
 
   const FetchGrowthData = useCallback(async () => {
     try {
-      const Route = `http://localhost:5000/api/Users/UserGrowth`;
+      const Route = `https://dashboard-love-spark-backend.vercel.app/api/Users/UserGrowth`;
       const config = {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,

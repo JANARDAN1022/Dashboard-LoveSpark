@@ -29,7 +29,7 @@ const BarChart = () => {
 
   const fetchUserData = useCallback(async () => {
     try {
-      const Route = `http://localhost:5000/api/Users/CompareRoles`;
+      const Route = `https://dashboard-love-spark-backend.vercel.app/api/Users/CompareRoles`;
       const config = {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,

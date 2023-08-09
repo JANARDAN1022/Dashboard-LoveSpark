@@ -33,7 +33,7 @@ const Reports = () => {
 
   const FetchReports = useCallback(async()=>{
     try {
-       const Route = `http://localhost:5000/api/Reports/GetReports`;
+       const Route = `https://dashboard-love-spark-backend.vercel.app/api/Reports/GetReports`;
        const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true };
        const {data} = await axios.get<ReportsData>(Route,config);
        setReports(data.Reports);

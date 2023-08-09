@@ -13,7 +13,7 @@ const Piechart = ()=>{
   // Fetch dynamic data here
   const fetchData = useCallback(async () => {
     try {
-      const Route = `http://localhost:5000/api/Users/LocationCount`;
+      const Route = `https://dashboard-love-spark-backend.vercel.app/api/Users/LocationCount`;
       const config = {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,

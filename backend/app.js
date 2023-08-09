@@ -14,7 +14,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 // Configure CORS middleware
 app.use(cors({
-    origin: ['https://love-spark-frontend.vercel.app', 'http://localhost:3000'],
+    origin: ['https://dashboard-love-spark-frontend.vercel.app', 'http://localhost:3000'],
     credentials: true
 }));
 

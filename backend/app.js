@@ -30,9 +30,9 @@ app.use(cors({
     
     app.use(express.json());
     app.use(cookieParser());
-app.use('/api/Users/',UserRoutes);
-app.use('/api/Reports/',ReportRoutes);
-app.use('/api/Admin/',AdminRoutes);
+app.use('/api/Users/',cors({ origin: allowedOrigins, credentials: true }),UserRoutes);
+app.use('/api/Reports/',cors({ origin: allowedOrigins, credentials: true }),ReportRoutes);
+app.use('/api/Admin/',cors({ origin: allowedOrigins, credentials: true }),AdminRoutes);
 app.use(ErrorHandler);
 
 app.get('/',(req,res)=>{

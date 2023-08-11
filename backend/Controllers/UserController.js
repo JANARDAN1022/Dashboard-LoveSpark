@@ -51,7 +51,7 @@ exports.DeleteUser = asyncerrorhandler(async(req,res,next)=>{
 //User Count
 exports.UserCount = asyncerrorhandler(async(req,res,next)=>{
   const TotalUsers = (await User.find({})).length;
-  const PremiumUsers = (await User.find({role:''})).length;
+  const PremiumUsers = (await User.find({role:'Premium'})).length;
   const NonPremiumUsers = TotalUsers - PremiumUsers;
   res.status(200).json({Total:TotalUsers,Premium:PremiumUsers,NonPremium:NonPremiumUsers});
 });

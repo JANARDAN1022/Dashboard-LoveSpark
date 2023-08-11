@@ -1,4 +1,4 @@
-import { BrowserRouter as Router,Routes,Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import Mainpage from "./Components/Pages/MainPage";
 import Login from "./Components/Layout/Login";
 import Register from "./Components/Layout/Register";

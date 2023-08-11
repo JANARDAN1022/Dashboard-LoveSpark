@@ -82,7 +82,7 @@ if(admin.length>0){
 
 // Update Admin Details
 exports.UpdateAdminDetails = asyncerrorhandler(async (req, res, next) => {
-  const { Email, Password, NewEmail, NewPassword, NewProfileUrl } = req.body;
+  const { Email, Password, NewEmail, NewPassword, NewProfileUrl,NewAdminName } = req.body;
   if (Email && Password) {
     // Find the admin by email
     const admin = await Admin.findOne({ Email: Email }).select('+password');
@@ -113,6 +113,10 @@ exports.UpdateAdminDetails = asyncerrorhandler(async (req, res, next) => {
     // Update profile URL if a new profile URL is provided
     if (NewProfileUrl) {
       admin.ProfileUrl = NewProfileUrl;
+    }
+
+    if(NewAdminName){
+      admin.AdminName = NewAdminName;
     }
 
     // Save the updated admin

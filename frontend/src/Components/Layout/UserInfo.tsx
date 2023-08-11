@@ -58,13 +58,10 @@ const UserInfo = () => {
           .filter(([_, value]) => value)
           .map(([key, _]) => `${key}=true`)
           .join('&');
-    
-          console.log('FilterQuery',filterQuery);
         // Add the filter query to the main query if any filters are selected
         if (filterQuery) {
           query += filterQuery;
         }
-     console.log(query);
         // Add the search query to the main query if SearchQuery is not empty
         if (Searched!=='') {
           if (query) query += '&';

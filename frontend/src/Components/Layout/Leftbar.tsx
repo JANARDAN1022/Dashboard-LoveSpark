@@ -7,6 +7,8 @@ import {FaUsers} from 'react-icons/fa';
 import {BiBarChartSquare} from 'react-icons/bi';
 import {AiOutlineArrowLeft} from 'react-icons/ai';
 import { MainPageContext } from '../../Context/MainPageContext';
+//import { Skeleton } from '@mui/material';
+//import { useAppSelector } from '../../Hooks';
 
 interface LeftbarProps {
   ToggleBar:boolean,
@@ -25,7 +27,9 @@ const Leftbar = ({ToggleBar,setToggleBar}:LeftbarProps) => {
     Reports:false
   });
   const {setShowComponent} = useContext(MainPageContext);
+  //const {loading} = useAppSelector((state)=>state.user);
   return (
+    
     <div className={`${ToggleBar===true?'w-[80px]':'w-[280px]'} h-[100vh]  flex flex-col transition-all duration-300 ease-in-out`}>
       <div className="pr-8 border border-l-0 border-t-0 border-[rgba(255,255,255,0.8)] flex p-5 justify-center  relative bg-gradient-to-r from-gray-700 via-gray-900 to-black">
       <Link to={'/'} className="flex title-font font-medium items-center text-gray-900 mb-4 sm:mb-0">

@@ -11,6 +11,7 @@ import axios from 'axios';
 import { Loaduser } from '../../Actions/AdminActions';
 import { useAppDispatch,useAppSelector } from '../../Hooks';
 import { useNavigate } from 'react-router-dom';
+import { Skeleton } from '@mui/material';
 
 interface userCount {
   Total:number,
@@ -31,7 +32,7 @@ const {loading,isAuthenticated,Admin} = useAppSelector((state)=>state.user);
 const Navigate = useNavigate();
 
 useEffect(()=>{
-  if(!loading  && (!isAuthenticated || Admin===null)){
+  if(!loading  && !isAuthenticated){
    Navigate('/Login');
   }
 },[Navigate,loading,isAuthenticated,Admin]);
@@ -60,10 +61,13 @@ FetchUserCount();
 
   return (
     <div className="flex w-full">
-   <Leftbar ToggleBar={ToggleBar} setToggleBar={setToggleBar}/>
-     <div className="flex flex-col h-screen w-full bg-gray-800">
+  <Leftbar ToggleBar={ToggleBar} setToggleBar={setToggleBar}/>
+   <div className="flex flex-col h-screen w-full bg-gray-800">
+      {loading?
+      <Skeleton animation='wave' variant='rectangular' width='100%' height={180} className='bg-gradient-to-r from-gray-700 via-gray-900 to-black' />
+      :
       <NavBar ToggleBar={ToggleBar} setToggleBar={setToggleBar} />
-      
+      }
       <div className='p-5 pt-10 flex justify-center overflow-y-scroll SCROLL mb-4'>
        <div className='flex flex-wrap'>
           {ShowComponent==='Dashboard'?

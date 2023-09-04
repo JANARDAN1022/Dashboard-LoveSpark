@@ -1,9 +1,11 @@
-import {useState,useRef,useEffect, useCallback} from 'react';
+import {useState,useRef,useEffect, useCallback, useContext} from 'react';
 import {AiOutlineSearch} from 'react-icons/ai';
 import {LiaUsersCogSolid} from 'react-icons/lia'; 
-import {MdExpandMore} from 'react-icons/md';
+import {MdExpandMore,MdAccountCircle} from 'react-icons/md';
 import {BiBlock} from 'react-icons/bi';
+import { Skeleton } from '@mui/material';
 import axios from 'axios';
+import { MainPageContext } from '../../Context/MainPageContext';
 
 interface User {
             _id: string,
@@ -42,6 +44,8 @@ const UserInfo = () => {
     const [Searched,setSearched]=useState('');
     const [ShowFilters,setShowFilters]=useState(false);
     const [FileterdCount,setFileterdCount]=useState(0);
+    const [ApiLoading,setApiLoading]=useState(false);
+    const {LogoutLoading} = useContext(MainPageContext);
     const [Filters,setFilters]=useState({
       Premium:false,
       NonPremium:false,
@@ -50,7 +54,9 @@ const UserInfo = () => {
     });
 
     const FetchUsers = useCallback(async () => {
+
       try {
+        setApiLoading(true);
         let query = '';
     
         // Build the filter query based on the selected filters
@@ -67,7 +73,7 @@ const UserInfo = () => {
           if (query) query += '&';
           query += `Search=${Searched}`;
         }
-    
+
         // Make the API request with the constructed query
         const Route = query!==''
           ? `https://dashboard-love-spark-backend.vercel.app/api/Users/All?${query}`
@@ -79,8 +85,10 @@ const UserInfo = () => {
         };
         const { data } = await axios.get<any>(Route, config);
         setusers(data.users);
+        setApiLoading(false);
       } catch (error) {
         console.log(error);
+        setApiLoading(false);
       }
     }, [Searched, Filters]);
     
@@ -103,6 +111,7 @@ const UserInfo = () => {
     }
 
   
+ 
 
     useEffect(()=>{
     const Count = Object.values(Filters).filter((value) => value===true).length; 
@@ -111,6 +120,12 @@ const UserInfo = () => {
     
 
     return (
+      ApiLoading || LogoutLoading?
+
+<Skeleton animation='wave' variant='rectangular' height='548px' width='100%' className='bg-gradient-to-r from-gray-900 via-gray-900 to-black' />
+
+      :
+
     <div className='flex  flex-col bg-gradient-to-r from-gray-900 via-gray-900 to-black'>
        <div className={`h-[80px] w-full flex flex-col  border-b border-[rgba(255,255,255,0.8)]`}>
     <div className='flex justify-between mt-5'>
@@ -154,11 +169,21 @@ const UserInfo = () => {
     {users?.length>0 && users.map((user)=>(
    <tr key={user._id} className='text-center items-center'>
     <td className='py-8'>{user.FirstName}</td>
-    <td>{user.Location.map((L)=>L.country)}</td>
-    <td>{user.email}</td>
+    <td>
+  {user.Location.every((L) => L.country === '')
+    ? '-----------'
+    : user.Location.filter((L) => L.country !== '')
+        .map((L) => L.country)
+        .join(', ')}
+</td>
+ <td>{user.email}</td>
     <td>{user.ProfileStatus}</td>
     <td className='flex justify-center items-center py-8'>
-    <img src={user.ProfileUrl} alt='IMG' className='w-[50px] h-[50px] rounded-full'/>
+      {user.ProfileUrl?
+    <img src={user.ProfileUrl} alt='IMG' className='w-[50px] h-[50px] rounded-full object-cover'/>
+      :
+      <MdAccountCircle className='w-[50px] h-[50px]'/>    
+  }
     </td>
     <td>{user.role==='user'?'Non-Premuim':'Premium'}</td>
     <td className='flex justify-center'> <BiBlock size={28} className='text-red-500 cursor-pointer' /></td>

@@ -7,25 +7,31 @@ import Piechart  from './Charts/PieChart';
 import Linechart from './Charts/LineChart';
 import Skeleton from '@mui/material/Skeleton/Skeleton';
 import { useAppSelector } from '../../Hooks';
+import { useContext } from 'react';
+import { MainPageContext } from '../../Context/MainPageContext';
+
 
 
 interface UserCount {
   Total:number,
   Premium:number,
-  NonPremium:number 
+  NonPremium:number ,
 } 
 
 interface DashboardProps {
- Count:UserCount
+ Count:UserCount,
+ ApiLoading:boolean,
 }
 
-const Dashboard = ({Count}:DashboardProps) => {
+const Dashboard = ({Count,ApiLoading}:DashboardProps) => {
 const {loading} = useAppSelector((state)=>state.user);
+const {LogoutLoading} = useContext(MainPageContext);
+
 
   return (
     <div className='flex'>
       <div className='flex flex-col w-full gap-8'>
-        {loading?
+        {loading || ApiLoading || LogoutLoading?
         <div className='flex items-center justify-around gap-10 flex-wrap'>
         <Skeleton width={350} height={155} variant='rectangular' animation='wave' className='bg-gradient-to-r from-gray-700 via-gray-900 to-black rounded-[10px] border border-white'/>
         <Skeleton width={350} height={155} variant='rectangular' animation='wave' className='bg-gradient-to-r from-gray-700 via-gray-900 to-black rounded-[10px] border border-white'/>
@@ -55,7 +61,7 @@ const {loading} = useAppSelector((state)=>state.user);
         }
 
         <div className='flex gap-10 md:justify-center flex-wrap'>
-          {loading?
+          {loading || LogoutLoading?
           <div className='flex flex-col gap-5 items-center'>
            <Skeleton width={700} height={300} variant='rectangular' animation='wave' className='bg-gradient-to-r from-gray-700 via-gray-900 to-black rounded-[10px] border border-white'/>
            <Skeleton width={550} height={250} variant='rectangular' animation='wave' className='bg-gradient-to-r from-gray-700 via-gray-900 to-black rounded-[10px] border border-white'/>
@@ -66,7 +72,7 @@ const {loading} = useAppSelector((state)=>state.user);
           <Linechart />
           </div>
 }
-         {loading?
+         {loading || LogoutLoading?
           <div className='flex flex-col gap-5 items-center'>
            <Skeleton width={450} height={300} variant='rectangular' animation='wave' className='bg-gradient-to-r from-gray-700 via-gray-900 to-black rounded-[10px] border border-white'/>
            <Skeleton width={340} height={260} variant='rectangular' animation='wave' className='bg-gradient-to-r from-gray-700 via-gray-900 to-black rounded-[10px] border border-white'/>
@@ -79,7 +85,7 @@ const {loading} = useAppSelector((state)=>state.user);
            }
         </div>
 
-        {loading?
+        {loading || LogoutLoading?
           <div className='flex flex-col gap-5 items-center'>
            <Skeleton width='100%' height={475} variant='rectangular' animation='wave' className='bg-gradient-to-r from-gray-700 via-gray-900 to-black  border border-white'/>
           </div>

@@ -125,6 +125,7 @@ const Login = () => {
           </label>
           <div className="mt-2 flex gap-5">
             <input
+             disabled={Loading}
             value={AdminInfo.Email}
             ref={EmailRef}
             onChange={(e)=>setAdminInfo({...AdminInfo,Email:e.target.value})}
@@ -152,6 +153,7 @@ const Login = () => {
           </div>
           <div className={`${Error.PassE?'w-[640px]':''} mt-2 flex gap-5 `}>
             <input
+            disabled={Loading}
             value={AdminInfo.Password}
             onChange={(e)=>setAdminInfo({...AdminInfo,Password:e.target.value})}
             ref={PassRef}

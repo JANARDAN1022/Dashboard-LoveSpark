@@ -8,8 +8,10 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useContext } from 'react';
 import axios from 'axios';
+import { Skeleton } from '@mui/material';
+import { MainPageContext } from '../../../Context/MainPageContext';
 
 interface GenderData {
   _id: string;
@@ -21,9 +23,12 @@ interface GenderData {
 
 const Linechart = () => {
   const [genderData, setGenderData] = useState<GenderData[]>([]);
+  const [LineChartloading,setLineChartloading]=useState(false);
+  const {LogoutLoading} = useContext(MainPageContext);
 
   const fetchGenderData = useCallback(async () => {
     try {
+      setLineChartloading(true);
       const Route = `https://dashboard-love-spark-backend.vercel.app/api/Users/GenderDistribution`;
       const config = {
         headers: { 'Content-Type': 'application/json' },
@@ -32,10 +37,12 @@ const Linechart = () => {
 
       const { data } = await axios.get<{ genderData: GenderData[] }>(Route, config);
       setGenderData(data.genderData);
+      setLineChartloading(false);
     } catch (error) {
       console.error('Error fetching gender data:', error);
+      setLineChartloading(false);
     }
-  }, []);
+  }, [setLineChartloading]);
 
   useEffect(() => {
     fetchGenderData();
@@ -66,6 +73,12 @@ const Linechart = () => {
   const formattedGenderData = processGenderData(genderData);
 
   return (
+    LineChartloading || LogoutLoading?
+
+    <Skeleton width={550} height={250} variant='rectangular' animation='wave' className='bg-gradient-to-r from-gray-700 via-gray-900 to-black rounded-[10px] border border-white'/>
+         
+    :
+
     <div className='w-[550px] flex flex-col gap-2 border border-white rounded-[5px] p-2 bg-gradient-to-r from-gray-700 via-gray-900 to-black'>
       <span className='text-white'>Comparing User Gender Count</span>
       <ResponsiveContainer width='100%' height={200}>

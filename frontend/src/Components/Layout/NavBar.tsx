@@ -2,7 +2,6 @@ import {useContext,useState} from 'react';
 import {RxHamburgerMenu} from 'react-icons/rx';
 import { MainPageContext } from '../../Context/MainPageContext';
 import {RiAdminLine} from 'react-icons/ri';
-import {IoIosNotificationsOutline} from 'react-icons/io';
 import {BiLogOut} from 'react-icons/bi';
 import { useAppSelector,useAppDispatch } from '../../Hooks';
 import { LogoutUser } from '../../Actions/AdminActions';
@@ -15,7 +14,7 @@ interface NavbarProps {
   }
 
 const NavBar = ({ToggleBar,setToggleBar}:NavbarProps) => {
-    const {ShowComponent} = useContext(MainPageContext);
+    const {ShowComponent,setLogoutLoading} = useContext(MainPageContext);
     const [Tooltip,setTooltip]=useState(false);
     const [ShowAcccount,setShowAcccount]=useState(false);
     const [Loading,setLoading]=useState(false);
@@ -27,12 +26,15 @@ const NavBar = ({ToggleBar,setToggleBar}:NavbarProps) => {
     const HandleLogout = async()=>{
       if(!Loading){
       setLoading(true);
+      setLogoutLoading(true);
      const response = await dispatch(LogoutUser());
       if (response.meta.requestStatus === 'fulfilled'){
         setLoading(false);
+        setLogoutLoading(false);
        Navigate('/Login');
       }else{
         setLoading(false);
+        setLogoutLoading(false);
       }
     }else{
       return;
@@ -47,14 +49,7 @@ const NavBar = ({ToggleBar,setToggleBar}:NavbarProps) => {
             <span className={`text-white`}>Home / {ShowComponent}</span>
         </div>
         <div className={`mr-10 flex gap-8 items-center`}>
-          {  /*<div className='flex items-center gap-2'>
-            <input ref={SearchRef} type='search' placeholder='Search...' className={`${Search?'scale-x-100':'scale-x-0'} text-base transition-all duration-700 ease-in-out  rounded-[5px] outline-none pl-2 h-[25px]`} />
-            <AiOutlineSearch onClick={HandleSearch} size={28} className='text-[rgba(255,255,255,0.8)] hover:text-white cursor-pointer'/>
-            </div>*/}
-            <div className='flex relative'>
-           <IoIosNotificationsOutline size={28} className='text-white cursor-pointer'/>
-            <span className='rounded-full w-5 justify-center items-center flex right-[-8px] top-[-10px] h-5 bg-yellow-300 text-red-500  absolute font-bold'>1</span>
-            </div>
+          
             <div className='flex gap-3 items-center relative'>
             {
             Admin?.ProfileUrl?

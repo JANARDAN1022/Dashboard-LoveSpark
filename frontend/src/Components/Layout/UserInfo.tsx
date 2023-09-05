@@ -3,6 +3,7 @@ import {AiOutlineSearch} from 'react-icons/ai';
 import {LiaUsersCogSolid} from 'react-icons/lia'; 
 import {MdExpandMore,MdAccountCircle} from 'react-icons/md';
 import {BiBlock} from 'react-icons/bi';
+import { RxCross1 } from 'react-icons/rx';
 import { Skeleton } from '@mui/material';
 import axios from 'axios';
 import { MainPageContext } from '../../Context/MainPageContext';
@@ -33,6 +34,7 @@ interface User {
             role: string,
             ProfileStatus: string,
             createdAt: string,
+            Blocked:boolean,
             __v: number,
             pincode: string
     }
@@ -93,7 +95,6 @@ const UserInfo = () => {
     }, [Searched, Filters]);
     
 
-
     // Debounce the API call when the search input changes
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -110,7 +111,21 @@ const UserInfo = () => {
         }
     }
 
-  
+    const HandleBlock = async(id:string,blocked:boolean)=>{
+      try {
+        setApiLoading(true);
+        const Route = `https://love-spark.vercel.app/api/Users/Update/${id}`
+        const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true };
+        const Data = blocked===true?{Blocked:false}:{Blocked:true};
+        await axios.put(Route,Data,config);
+        setApiLoading(false);
+       FetchUsers();
+      } catch (error) {
+        console.log(error);
+        setApiLoading(false);
+        
+      }
+     }
  
 
     useEffect(()=>{
@@ -186,7 +201,16 @@ const UserInfo = () => {
   }
     </td>
     <td>{user.role==='user'?'Non-Premuim':'Premium'}</td>
-    <td className='flex justify-center'> <BiBlock size={28} className='text-red-500 cursor-pointer' /></td>
+    <td onClick={()=>HandleBlock(user._id,user.Blocked)} className='flex justify-center'> 
+    <button className='items-center hover:shadow-sm hover:shadow-white flex gap-3 justify-center border-white border w-[110px] p-2'>
+    {user.Blocked?
+ <RxCross1 size={28} className='text-green-500'/>
+ :
+ <BiBlock size={28} className='text-red-500 '/>
+ }
+    <span className={`${user.Blocked?'text-green-500':'text-red-500'}`}>{user.Blocked?'UnBlock':'Block'}</span>
+    </button>
+    </td>
    </tr>
     ))}
   </tbody>

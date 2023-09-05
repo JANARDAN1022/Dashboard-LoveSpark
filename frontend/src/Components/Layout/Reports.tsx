@@ -58,14 +58,18 @@ const Reports = () => {
     FetchReports();
    },[FetchReports]);
 
-   const HandleBlock = async(id:string)=>{
+   const HandleBlock = async(id:string,blocked:boolean)=>{
     try {
+      setReportloading(true);
       const Route = `https://love-spark.vercel.app/api/Users/Update/${id}`
       const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true };
-      await axios.put(Route,{Blocked:true},config);
+      const Data = blocked===true?{Blocked:false}:{Blocked:true};
+      await axios.put(Route,Data,config);
+      setReportloading(false);
       FetchReports();
     } catch (error) {
       console.log(error);
+      setReportloading(false);
     }
    }
       
@@ -133,7 +137,7 @@ const Reports = () => {
  </td>
  <td>{Report.Reason}</td>
  
- <td onClick={()=>HandleBlock(Report.ReportedUser._id)} className='flex justify-center cursor-pointer'> 
+ <td onClick={()=>HandleBlock(Report.ReportedUser._id,Report.ReportedUser.Blocked)} className='flex justify-center cursor-pointer'> 
 <button className='hover:shadow-sm hover:shadow-white flex gap-3 justify-center border-white border w-[120px] p-2'>
  {Report.ReportedUser.Blocked?
  <RxCross1 size={28} className='text-green-500'/>

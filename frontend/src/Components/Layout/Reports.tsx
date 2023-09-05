@@ -1,6 +1,7 @@
 import {useState,useCallback,useEffect,useRef, useContext} from 'react';
 import axios from 'axios';
 import {BiBlock} from 'react-icons/bi';
+import { RxCross1 } from 'react-icons/rx';
 import {AiOutlineSearch} from 'react-icons/ai';
 import {LiaUsersCogSolid} from 'react-icons/lia'; 
 import {MdExpandMore} from 'react-icons/md';
@@ -21,7 +22,8 @@ interface ReportsData {
         ReportedUser: {
             _id:string,
             FirstName: string,
-            ProfileUrl:string 
+            ProfileUrl:string,
+            Blocked:boolean,
            },
        Reason: string,
     }
@@ -36,6 +38,7 @@ const Reports = () => {
     const SearchRef = useRef<HTMLInputElement>(null);
   const [Reports,setReports]=useState<ReportsData["Reports"] | []>([]);
   const [Reportloading,setReportloading]=useState(false);
+ 
 
   const FetchReports = useCallback(async()=>{
     try {
@@ -54,6 +57,17 @@ const Reports = () => {
    useEffect(()=>{
     FetchReports();
    },[FetchReports]);
+
+   const HandleBlock = async(id:string)=>{
+    try {
+      const Route = `https://love-spark.vercel.app/api/Users/Update/${id}`
+      const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true };
+      await axios.put(Route,{Blocked:true},config);
+      FetchReports();
+    } catch (error) {
+      console.log(error);
+    }
+   }
       
    const HandleSearch = ()=>{
     setSearch(!Search);
@@ -61,6 +75,9 @@ const Reports = () => {
         SearchRef.current.focus();
     }
 }
+
+
+
   return (
     loading || Reportloading || LogoutLoading?
 
@@ -115,7 +132,17 @@ const Reports = () => {
  <img src={Report.ReportedUser.ProfileUrl} alt='IMG' className='w-[50px] h-[50px] rounded-full object-cover'/>
  </td>
  <td>{Report.Reason}</td>
- <td className='flex justify-center'> <BiBlock size={28} className='text-red-500 '/></td>
+ 
+ <td onClick={()=>HandleBlock(Report.ReportedUser._id)} className='flex justify-center cursor-pointer'> 
+<button className='hover:shadow-sm hover:shadow-white flex gap-3 justify-center border-white border w-[120px] p-2'>
+ {Report.ReportedUser.Blocked?
+ <RxCross1 size={28} className='text-green-500'/>
+ :
+ <BiBlock size={28} className='text-red-500 '/>}
+ <span className={`${Report.ReportedUser.Blocked===true?'text-green-500':'text-red-500'} text-lg`}>{Report.ReportedUser.Blocked===true?'UnBlock':'Block'}</span>
+</button >
+ </td>
+
 </tr>
  ))}
 </tbody>

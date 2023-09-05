@@ -12,7 +12,7 @@ exports.GetReports = asyncerrorhandler(async(req,res,next)=>{
       })
       .populate({
         path: 'ReportedUser',
-        select: 'FirstName ProfileUrl', // Select the fields you want to populate for ReportedUser
+        select: 'FirstName ProfileUrl Blocked', // Select the fields you want to populate for ReportedUser
       })
       .exec();
 

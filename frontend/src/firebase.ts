@@ -1,11 +1,11 @@
 import {initializeApp} from 'firebase/app';
-import { getAnalytics } from "firebase/analytics";
+//import { getAnalytics } from "firebase/analytics";
 import {getStorage} from "firebase/storage";
 
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAL2HfPn8psBJjKA7mRZIxu29yjWOfg9Hg",
+  apiKey: "AIzaSyDDtSU0ncz3KFvGmRhmJMBEo0rHU8ooz7s",
   authDomain: "lovespark-c8351.firebaseapp.com",
   projectId: "lovespark-c8351",
   storageBucket: "lovespark-c8351.appspot.com",
@@ -16,6 +16,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+//const analytics = getAnalytics(app);
 export const storage = getStorage(app);
-console.log(analytics);
+//console.log(analytics);

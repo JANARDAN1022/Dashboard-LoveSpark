@@ -114,10 +114,10 @@ const UpdateInfo = () => {
         else {
           try {
             if(ProfilePic!==null){
+              setLoading(true);
           const profileRef = ref(storage, `AdminProfilePic/${Admin?._id}`);
            const [profileSnapshot] =  await Promise.all([uploadBytes(profileRef, ProfilePic)]);
             const profileUrl = profileSnapshot ? await getDownloadURL(profileSnapshot.ref) : '';
-            setLoading(true);
             var response = await Dispatch(UpdateUser({
               Email,
               Password,
@@ -173,8 +173,8 @@ const UpdateInfo = () => {
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
       </svg>
       </div>
-      <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-        Update Ur Details
+      <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-yellow-500">
+        Update Account Details
       </h2>
     </div>
 

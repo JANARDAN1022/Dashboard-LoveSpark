@@ -14,7 +14,7 @@ interface NavbarProps {
   }
 
 const NavBar = ({ToggleBar,setToggleBar}:NavbarProps) => {
-    const {ShowComponent,setLogoutLoading} = useContext(MainPageContext);
+    const {ShowComponent,setLogoutLoading,setShowComponent} = useContext(MainPageContext);
     const [Tooltip,setTooltip]=useState(false);
     const [ShowAcccount,setShowAcccount]=useState(false);
     const [Loading,setLoading]=useState(false);
@@ -62,7 +62,10 @@ const NavBar = ({ToggleBar,setToggleBar}:NavbarProps) => {
             <MdExpandMore size={28} className={`text-white cursor-pointer ${ShowAcccount?'rotate-180':''} transition-all duration-100 ease-in-out`}/>
             </div>
             <div className={`${ShowAcccount?'':'hidden'}  absolute w-[180px] h-[45px]  flex  border border-white  bg-gradient-to-r from-gray-900 via-black to-black  z-50 top-12 right-2 rounded-[5px]`}>
-            <span onClick={()=>Navigate('/UpdateInfo')} className='text-[rgba(255,255,255,0.7)] w-full text-center rounded-[5px] self-center p-2  cursor-pointer transition-all duration-100 ease-in-out hover:bg-gradient-to-r hover:from-gray-700 hover:via-gray-800 hover:to-black'>Account Update</span>
+            <span onClick={()=>{
+              Navigate('/UpdateInfo')
+              setShowComponent('Dashboard')
+              }} className='text-[rgba(255,255,255,0.7)] w-full text-center rounded-[5px] self-center p-2  cursor-pointer transition-all duration-100 ease-in-out hover:bg-gradient-to-r hover:from-gray-700 hover:via-gray-800 hover:to-black'>Account Update</span>
             </div>
             </div>
             <div className='flex  justify-center relative'>
